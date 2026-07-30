@@ -28,28 +28,34 @@ export default function HeroSection() {
         </ul>
       </FadeIn>
 
-      {/* Portrait */}
-      <FadeIn
-        delay={0.6}
-        y={30}
-        className="pointer-events-none absolute left-1/2 top-1/2 z-10 w-[280px] -translate-x-1/2 -translate-y-1/2 sm:w-[360px] md:w-[440px] lg:w-[520px]"
-      >
-        <Magnet
-          padding={150}
-          strength={3}
-          activeTransition="transform 0.3s ease-out"
-          inactiveTransition="transform 0.6s ease-in-out"
-          wrapperClassName="w-full"
-          innerClassName="w-full"
+      {/* Portrait.
+          Centring lives on this plain wrapper, NOT on the FadeIn. Framer Motion
+          writes `transform` into the inline style, which beats Tailwind's
+          -translate-x-1/2 utility class, so a motion element cannot be centred
+          that way. Flex centring uses no transform, so the two never collide. */}
+      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+        <FadeIn
+          delay={0.6}
+          y={30}
+          className="w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px]"
         >
-          <img
-            src={PORTRAIT_SRC}
-            alt="Portrait of Yosapat"
-            className="block h-auto w-full select-none"
-            draggable={false}
-          />
-        </Magnet>
-      </FadeIn>
+          <Magnet
+            padding={150}
+            strength={3}
+            activeTransition="transform 0.3s ease-out"
+            inactiveTransition="transform 0.6s ease-in-out"
+            wrapperClassName="w-full"
+            innerClassName="w-full"
+          >
+            <img
+              src={PORTRAIT_SRC}
+              alt="Portrait of Yosapat"
+              className="block h-auto w-full select-none"
+              draggable={false}
+            />
+          </Magnet>
+        </FadeIn>
+      </div>
 
       {/* Heading */}
       <div className="relative z-0 overflow-hidden">

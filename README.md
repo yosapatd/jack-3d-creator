@@ -30,7 +30,7 @@ src/sections/
   ExperienceSection.tsx       sticky card stack, four real roles
   ContactSection.tsx          email + LinkedIn
 src/data/experience.ts        work history content
-public/yosapat-portrait.webp  hero portrait (transparent, 79 KB)
+public/yosapat-portrait.webp  hero portrait (transparent, bottom-faded, 64 KB)
 netlify.toml                  build command, publish dir, Node 20
 ```
 
@@ -52,6 +52,11 @@ netlify.toml                  build command, publish dir, Node 20
   Kanit 900 with `tracking-tight`. The sizes `10 / 10.7 / 11.4 / 12.5vw` were derived from
   that so the line spans the viewport without clipping. Change the name and you must
   re-derive them — `whitespace-nowrap` means overflow is silently cut, not wrapped.
+- **Never centre a Framer Motion element with Tailwind's `-translate-x-1/2`.** Motion writes
+  `transform` into the inline style, which beats the utility class, so the element silently
+  lands half its own width to the right. The hero portrait is centred by a plain flex wrapper
+  (`absolute inset-0 flex items-center justify-center`) with `FadeIn` inside it — positioning
+  and animation kept on separate elements.
 - **Section ids are the nav targets.** `about`, `services`, `experience`, `contact` in
   `HeroSection`'s `NAV_LINKS` are lowercased to build the anchors. Rename a label and you
   must rename the matching section `id`.
