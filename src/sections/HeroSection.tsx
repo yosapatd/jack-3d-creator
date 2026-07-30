@@ -7,16 +7,15 @@ import {
 import { useRef } from 'react';
 import ContactButton from '../components/ContactButton';
 import FadeIn from '../components/FadeIn';
-import Magnet from '../components/Magnet';
 import ScrollSequence from '../components/ScrollSequence';
 
 const NAV_LINKS = ['About', 'Services', 'Experience', 'Contact'];
 
 /**
- * Fraction of the pinned scroll spent playing the character animation.
- * The remainder is the exit hand-off to the next section.
+ * Fraction of the pinned scroll spent playing the character animation. The
+ * remainder holds the closing pose for a beat before the pin releases.
  */
-const SCRUB_END = 0.8;
+const SCRUB_END = 0.9;
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -24,44 +23,31 @@ export default function HeroSection() {
 
   // The section is taller than the viewport and its contents are sticky, so the
   // hero holds still while this progress runs 0 -> 1. That is the whole point:
-  // previously the range was tied to the hero LEAVING the viewport, so the back
-  // half of the animation played off-screen where nobody could see it.
+  // an earlier version tied the range to the hero LEAVING the viewport, so the
+  // back half of the animation played off-screen where nobody could see it.
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end end'],
   });
 
-  // Animation finishes at SCRUB_END, comfortably before the pin releases.
+  // Animation completes at SCRUB_END, comfortably before the pin releases.
   const scrubProgress = useTransform(scrollYProgress, [0, SCRUB_END], [0, 1]);
 
-  // Two phases. Up to SCRUB_END the layers drift slowly at different rates,
-  // which is what reads as depth while the section is held still. After it, the
-  // hero lifts away and fades so the next section does not just barge in.
-  const portraitY = useTransform(
-    scrollYProgress,
-    [0, SCRUB_END, 1],
-    still ? [0, 0, 0] : [0, 28, -90]
-  );
-  const portraitScale = useTransform(
-    scrollYProgress,
-    [0, SCRUB_END, 1],
-    still ? [1, 1, 1] : [1, 1.06, 1.1]
-  );
-  const portraitOpacity = useTransform(
-    scrollYProgress,
-    [0, SCRUB_END, 1],
-    still ? [1, 1, 1] : [1, 1, 0]
-  );
-  const headingY = useTransform(
-    scrollYProgress,
-    [0, SCRUB_END, 1],
-    still ? [0, 0, 0] : [0, -48, -130]
-  );
-  const barY = useTransform(
-    scrollYProgress,
-    [0, SCRUB_END, 1],
-    still ? [0, 0, 0] : [0, 36, 95]
-  );
+  // Parallax = three layers drifting DOWN at different rates. Foreground moves
+  // most, background least; the difference is what reads as depth while the
+  // section is held still.
+  //
+  // Every distance here is bounded by the clip budget of the sticky pane, which
+  // has overflow-hidden. The bottom bar's only budget is its own bottom padding
+  // (28px on mobile), so it gets 22px and no more — an earlier version pushed it
+  // 95px and the strapline and Contact button were sliced clean off. The heading
+  // drifts downward, away from the top edge, so it cannot clip either. There is
+  // no exit fade: the pin release scrolls the whole pane away as one piece,
+  // which is a cleaner hand-off than emptying the hero out in place.
+  const portraitY = useTransform(scrollYProgress, [0, 1], still ? [0, 0] : [0, 70]);
+  const portraitScale = useTransform(scrollYProgress, [0, 1], still ? [1, 1] : [1, 1.08]);
+  const headingY = useTransform(scrollYProgress, [0, 1], still ? [0, 0] : [0, 18]);
+  const barY = useTransform(scrollYProgress, [0, 1], still ? [0, 0] : [0, 22]);
 
   return (
     <section
@@ -93,35 +79,20 @@ export default function HeroSection() {
             Framer Motion writes `transform` into the inline style, which beats
             Tailwind's -translate-x-1/2 utility class, so a motion element cannot
             be centred that way. Flex centring uses no transform, so the two
-            never collide. Entry fade, scroll parallax and the magnet each own a
-            separate element for the same reason — one transform per element. */}
+            never collide. Entry fade and scroll parallax still own separate
+            elements for the same reason — one transform per element. */}
         <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
           <FadeIn
             delay={0.6}
             y={30}
             className="w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px]"
           >
-            <motion.div
-              style={{
-                y: portraitY,
-                scale: portraitScale,
-                opacity: portraitOpacity,
-              }}
-            >
-              <Magnet
-                padding={150}
-                strength={3}
-                activeTransition="transform 0.3s ease-out"
-                inactiveTransition="transform 0.6s ease-in-out"
-                wrapperClassName="w-full"
-                innerClassName="w-full"
-              >
-                <ScrollSequence
-                  progress={scrubProgress}
-                  alt="Animated 3D portrait of Yosapat"
-                  className="select-none"
-                />
-              </Magnet>
+            <motion.div style={{ y: portraitY, scale: portraitScale }}>
+              <ScrollSequence
+                progress={scrubProgress}
+                alt="Animated 3D portrait of Yosapat"
+                className="select-none"
+              />
             </motion.div>
           </FadeIn>
         </div>
