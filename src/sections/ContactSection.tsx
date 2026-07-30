@@ -36,19 +36,21 @@ export default function ContactSection() {
         <FadeIn
           delay={0.2}
           y={20}
-          className="flex flex-col items-center gap-4 sm:flex-row sm:gap-5"
+          className="flex w-full max-w-[300px] flex-col gap-4 sm:max-w-none sm:flex-row sm:justify-center sm:gap-5"
         >
-          <ContactButton />
+          <ContactButton className="w-full text-center sm:w-auto" />
           <a
             href={LINKEDIN}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block whitespace-nowrap rounded-full border-2 border-[#D7E2EA] px-8 py-3 text-sm font-medium uppercase tracking-widest text-[#D7E2EA] transition-colors duration-200 hover:bg-[#D7E2EA]/10 sm:px-10 sm:py-3.5 sm:text-base"
+            className="inline-flex w-full items-center justify-center gap-2.5 whitespace-nowrap rounded-full border-2 border-[#D7E2EA] px-[30px] py-[10px] text-xs font-medium uppercase tracking-widest text-[#D7E2EA] transition-colors duration-200 hover:bg-[#D7E2EA]/10 sm:w-auto sm:px-[38px] sm:py-[12px] sm:text-sm md:px-[46px] md:py-[14px] md:text-base"
           >
-            <span className="inline-flex items-center gap-2.5">
-              <Linkedin size={18} strokeWidth={2} aria-hidden="true" />
-              LinkedIn
-            </span>
+            <Linkedin
+              className="h-4 w-4 shrink-0 md:h-[18px] md:w-[18px]"
+              strokeWidth={2}
+              aria-hidden="true"
+            />
+            LinkedIn
           </a>
         </FadeIn>
 
