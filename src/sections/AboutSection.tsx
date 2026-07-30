@@ -2,11 +2,15 @@ import AnimatedText from '../components/AnimatedText';
 import ContactButton from '../components/ContactButton';
 import FadeIn from '../components/FadeIn';
 
-const BASE =
-  'https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7';
-
 const ABOUT_COPY =
-  "With more than five years of experience in design, i focus on branding, web design, and user experience, i truly enjoy working with businesses that aim to stand out and present their best image. Let's build something incredible together!";
+  'Ten years inside SAP Materials Management, across retail, healthcare, printing, and oil & gas. I work the whole arc of a change: requirement gathering, configuration, functional specification, testing, and go-live support.';
+
+const CREDENTIALS = [
+  { value: '10 yrs', label: 'SAP MM experience' },
+  { value: '4', label: 'Industries delivered in' },
+  { value: 'S/4HANA', label: 'Migration & upgrade cycles' },
+  { value: 'KMITL', label: 'BSc Computer Science' },
+];
 
 export default function AboutSection() {
   return (
@@ -15,50 +19,8 @@ export default function AboutSection() {
       className="relative flex min-h-screen w-full items-center justify-center bg-[#0C0C0C] px-5 py-20 sm:px-8 md:px-10"
       style={{ overflowX: 'clip' }}
     >
-      {/* Decorative 3D props — corners */}
-      <FadeIn
-        delay={0.1}
-        duration={0.9}
-        x={-80}
-        y={0}
-        className="pointer-events-none absolute left-[1%] top-[4%] w-[120px] sm:left-[2%] sm:w-[160px] md:left-[4%] md:w-[210px]"
-      >
-        <img src={`${BASE}/moon_icon.11395d36.png`} alt="" aria-hidden="true" className="h-auto w-full" />
-      </FadeIn>
-
-      <FadeIn
-        delay={0.25}
-        duration={0.9}
-        x={-80}
-        y={0}
-        className="pointer-events-none absolute bottom-[8%] left-[3%] w-[100px] sm:left-[6%] sm:w-[140px] md:left-[10%] md:w-[180px]"
-      >
-        <img src={`${BASE}/p59_1.4659672e.png`} alt="" aria-hidden="true" className="h-auto w-full" />
-      </FadeIn>
-
-      <FadeIn
-        delay={0.15}
-        duration={0.9}
-        x={80}
-        y={0}
-        className="pointer-events-none absolute right-[1%] top-[4%] w-[120px] sm:right-[2%] sm:w-[160px] md:right-[4%] md:w-[210px]"
-      >
-        <img src={`${BASE}/lego_icon-1.703bb594.png`} alt="" aria-hidden="true" className="h-auto w-full" />
-      </FadeIn>
-
-      <FadeIn
-        delay={0.3}
-        duration={0.9}
-        x={80}
-        y={0}
-        className="pointer-events-none absolute bottom-[8%] right-[3%] w-[130px] sm:right-[6%] sm:w-[170px] md:right-[10%] md:w-[220px]"
-      >
-        <img src={`${BASE}/Group_134-1.2e04f3ce.png`} alt="" aria-hidden="true" className="h-auto w-full" />
-      </FadeIn>
-
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center gap-16 sm:gap-20 md:gap-24">
-        <div className="flex flex-col items-center gap-10 sm:gap-14 md:gap-16">
+      <div className="relative z-10 flex w-full max-w-5xl flex-col items-center gap-16 sm:gap-20 md:gap-24">
+        <div className="flex w-full flex-col items-center gap-10 sm:gap-14 md:gap-16">
           <FadeIn
             as="h2"
             delay={0}
@@ -69,17 +31,51 @@ export default function AboutSection() {
             About me
           </FadeIn>
 
-          <AnimatedText
-            text={ABOUT_COPY}
-            className="max-w-[560px] text-center font-medium leading-relaxed text-[#D7E2EA]"
-            style={{ fontSize: 'clamp(1rem, 2vw, 1.35rem)' }}
-          />
+          <div className="flex flex-col items-center gap-6">
+            <FadeIn
+              as="p"
+              delay={0.1}
+              y={20}
+              className="text-center font-light uppercase tracking-[0.2em] text-[#D7E2EA] opacity-50"
+              style={{ fontSize: 'clamp(0.7rem, 1.1vw, 0.9rem)' }}
+            >
+              Yosapat Dangvijitthakarn · Boss
+            </FadeIn>
+
+            <AnimatedText
+              text={ABOUT_COPY}
+              className="max-w-[620px] text-center font-medium leading-relaxed text-[#D7E2EA]"
+              style={{ fontSize: 'clamp(1rem, 2vw, 1.35rem)' }}
+            />
+          </div>
+
+          <div className="grid w-full grid-cols-2 gap-x-6 gap-y-8 border-t border-[#D7E2EA]/15 pt-10 md:grid-cols-4 md:gap-x-8">
+            {CREDENTIALS.map((item, i) => (
+              <FadeIn
+                key={item.label}
+                delay={0.15 + i * 0.08}
+                y={20}
+                className="flex flex-col gap-2 text-center"
+              >
+                <span
+                  className="hero-heading font-black uppercase leading-none"
+                  style={{ fontSize: 'clamp(1.5rem, 3.2vw, 2.5rem)' }}
+                >
+                  {item.value}
+                </span>
+                <span
+                  className="font-light uppercase leading-snug tracking-wider text-[#D7E2EA] opacity-55"
+                  style={{ fontSize: 'clamp(0.65rem, 1vw, 0.8rem)' }}
+                >
+                  {item.label}
+                </span>
+              </FadeIn>
+            ))}
+          </div>
         </div>
 
         <FadeIn delay={0.2} y={20}>
-          <span id="contact" className="inline-block scroll-mt-24">
-            <ContactButton />
-          </span>
+          <ContactButton />
         </FadeIn>
       </div>
     </section>

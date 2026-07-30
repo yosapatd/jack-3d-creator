@@ -4,3 +4,9 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Single-page site, but this keeps deep links working if a router is added later.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

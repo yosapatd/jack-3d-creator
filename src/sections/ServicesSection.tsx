@@ -9,33 +9,33 @@ type Service = {
 const SERVICES: Service[] = [
   {
     number: '01',
-    name: '3D Modeling',
+    name: 'SAP MM Implementation',
     description:
-      'Creation of detailed objects, characters, or environments tailored to specific client needs, ideal for games, products, and visualizations.',
+      'Full-cycle Materials Management delivery — Procure to Pay and Plan to Repair process design, master data configuration, and organisation structure setup aligned to how the business actually buys and maintains.',
   },
   {
     number: '02',
-    name: 'Rendering',
+    name: 'ECC to S/4HANA Migration',
     description:
-      'High-quality, photorealistic renders that showcase designs with custom lighting, textures, and materials to bring concepts to life.',
+      'Re-implementation and upgrade programmes from SAP ECC to S/4HANA, covering fit-gap analysis, configuration, data migration and conversion, and cutover support through to a stable go-live.',
   },
   {
     number: '03',
-    name: 'Motion Design',
+    name: 'Fiori & UI5 Enhancement',
     description:
-      'Dynamic animations and motion graphics that add energy and storytelling to brands, products, and digital experiences.',
+      'Extending and supporting Fiori UI5 applications in live landscapes — reworking screens around real user tasks and keeping enhancements maintainable after handover.',
   },
   {
     number: '04',
-    name: 'Branding',
+    name: 'Functional Specification & ABAP',
     description:
-      'Crafting cohesive visual identities — from logos to full brand systems — that communicate a clear and memorable presence.',
+      'Translating business requirements into functional specifications developers can build from, designing custom programs and reports, then debugging to trace root causes rather than symptoms.',
   },
   {
     number: '05',
-    name: 'Web Design',
+    name: 'Basis, Authorisation & Batch',
     description:
-      'Designing clean, modern, and conversion-focused websites with attention to layout, typography, and user experience.',
+      'Authorisation design across organisation levels, roles, parameters, and user AD, plus batch job setup and monitoring for recurring processes such as replenishment.',
   },
 ];
 
@@ -44,7 +44,7 @@ const HAIRLINE = 'rgba(12, 12, 12, 0.15)';
 export default function ServicesSection() {
   return (
     <section
-      id="price"
+      id="services"
       className="w-full rounded-t-[40px] bg-white px-5 py-20 sm:rounded-t-[50px] sm:px-8 sm:py-24 md:rounded-t-[60px] md:px-10 md:py-32"
     >
       <FadeIn

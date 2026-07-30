@@ -1,8 +1,9 @@
 import HeroSection from './sections/HeroSection';
-import MarqueeSection from './sections/MarqueeSection';
+import SkillsMarquee from './sections/SkillsMarquee';
 import AboutSection from './sections/AboutSection';
 import ServicesSection from './sections/ServicesSection';
-import ProjectsSection from './sections/ProjectsSection';
+import ExperienceSection from './sections/ExperienceSection';
+import ContactSection from './sections/ContactSection';
 
 export default function App() {
   return (
@@ -11,10 +12,11 @@ export default function App() {
       style={{ overflowX: 'clip' }}
     >
       <HeroSection />
-      <MarqueeSection />
+      <SkillsMarquee />
       <AboutSection />
       <ServicesSection />
-      <ProjectsSection />
+      <ExperienceSection />
+      <ContactSection />
     </main>
   );
 }
