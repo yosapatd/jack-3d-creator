@@ -62,15 +62,25 @@ position — not a `<video>`.
 
 - **Skills marquee** reads `window.scrollY` against the section's `offsetTop`, scaled by
   `0.3`. Row one travels `+(offset - 200)px`, row two the inverse. Listener is passive; rows
-  use `will-change: transform`. Pills are tripled so the strip never runs dry.
+  use `will-change: transform`. Pills are tripled and each row is parked at `-33.3333%` so
+  the middle copy sits at the origin — that leaves a spare copy of slack in both directions,
+  so neither row can expose a gap at its leading edge. Because the travel is measured from
+  the marquee's own `offsetTop`, changing the hero's height does not affect it.
 - **Card stack** uses one `useScroll` on the card container with `['start start', 'end end']`,
   then one `useTransform` per card mapping `[index/total, 1]` to
   `[1, 1 - (total - 1 - index) * 0.03]`. Cards are `sticky` inside `h-[85vh]` wrappers and
   offset by `index * 28px`, so each shrinks as the next slides over it.
-- **Hero parallax** runs three layers off one `useScroll` spanning exactly one viewport
-  (`['start start', 'end start']`): the portrait drifts down 160px and scales to 1.12 while
-  fading out, the heading lifts 70px, the bottom bar drifts 60px. Different rates are what
-  read as depth.
+- **Hero is pinned.** The section is `h-[180vh]` with a `sticky top-0 h-screen` pane inside,
+  so the hero holds still for 80vh of scrolling. `useScroll` uses
+  `['start start', 'end end']`, which spans exactly that pinned stretch. The frame scrub is
+  remapped to finish at `SCRUB_END` (0.8), leaving the last 20% as the exit hand-off.
+  **This is deliberate, not incidental**: an earlier version tied the range to the hero
+  *leaving* the viewport, so frames 33-47 played while the character was already fading out
+  or off-screen. To make the hold shorter or longer, change the `h-[180vh]` height — the two
+  numbers to keep in step are that height and `SCRUB_END`.
+- **Parallax** runs three layers at different rates within the pinned pane, which is what
+  reads as depth while nothing is actually scrolling: portrait drifts +28px then lifts to
+  -90px, heading lifts -48px then -130px, bottom bar drifts +36px then +95px.
 - **Back to top** appears past 0.9 viewports and rings itself with overall scroll progress,
   using the same `#646973 -> #BBCCD7` gradient as the headings.
 - **Reduced motion** is respected via a `prefers-reduced-motion` block in `index.css`, and

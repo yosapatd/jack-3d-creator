@@ -27,7 +27,12 @@ const ROW_TWO = [
   'Training & Documentation',
 ];
 
-/** Tripled so the strip never runs out of pills while it travels. */
+/**
+ * Tripled so the strip never runs out of pills while it travels. Each row is
+ * then parked at -33.3333%, which puts the middle copy at the origin — so there
+ * is a full spare copy of slack in BOTH directions and neither row can expose a
+ * gap at its leading edge, whichever way it is moving.
+ */
 const triple = (items: string[]) => [...items, ...items, ...items];
 
 function Pill({ label, dim }: { label: string; dim: boolean }) {
@@ -76,7 +81,10 @@ export default function SkillsMarquee() {
       <div className="flex flex-col gap-4 md:gap-5">
         <div
           className="flex w-max gap-4 md:gap-5"
-          style={{ transform: `translateX(${travel}px)`, willChange: 'transform' }}
+          style={{
+            transform: `translateX(calc(-33.3333% + ${travel}px))`,
+            willChange: 'transform',
+          }}
         >
           {triple(ROW_ONE).map((label, i) => (
             <Pill key={`r1-${i}`} label={label} dim={false} />
@@ -85,7 +93,10 @@ export default function SkillsMarquee() {
 
         <div
           className="flex w-max gap-4 md:gap-5"
-          style={{ transform: `translateX(${-travel}px)`, willChange: 'transform' }}
+          style={{
+            transform: `translateX(calc(-33.3333% + ${-travel}px))`,
+            willChange: 'transform',
+          }}
         >
           {triple(ROW_TWO).map((label, i) => (
             <Pill key={`r2-${i}`} label={label} dim />
