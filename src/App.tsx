@@ -4,6 +4,7 @@ import AboutSection from './sections/AboutSection';
 import ServicesSection from './sections/ServicesSection';
 import ExperienceSection from './sections/ExperienceSection';
 import ContactSection from './sections/ContactSection';
+import BackToTop from './components/BackToTop';
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
       <ServicesSection />
       <ExperienceSection />
       <ContactSection />
+      <BackToTop />
     </main>
   );
 }
